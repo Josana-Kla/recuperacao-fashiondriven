@@ -122,6 +122,8 @@ header img {
 
 .small-lines div p {
     font-size: 18px;
+
+    text-align: center;
 }
 
 
@@ -200,6 +202,8 @@ header img {
 
     .column-one-choose-options {
         width: 100%;
+
+        padding: 0;
     }
 
     .column-one-choose-options div {
@@ -216,7 +220,27 @@ header img {
         width: 100%;
     }
 
+    .big-line div {
+        padding: 0;
+    }
+
     .small-lines {
         justify-content: space-evenly;
+    }
+
+    .last-orderes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .line-last-orderes {
+        justify-content: center;
+
+        margin: 0;
+    }
+
+    .line-last-orderes div {
+        width: 100%;
     }
 }
