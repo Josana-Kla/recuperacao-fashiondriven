@@ -11,7 +11,15 @@ body {
 
 header {
     background-color: #404EED;
+
+    display: flex;
+    align-items: center;
+
     height: 89px;
+}
+
+header img {
+    margin-left: calc((100vw - 50%) / 9);
 }
 
 main {
@@ -26,7 +34,7 @@ main {
 
 .column-one-choose-options {
     background-color: chartreuse;
-    width: 50%; /*usar calc?*/
+    width: calc(100vw - 50%);
 
     display: flex;
     flex-direction: column;
@@ -65,7 +73,7 @@ main {
 
 .column-two-image-model {
     background-color: #404EED;
-    width: 50%; /*usar calc?*/
+    width: calc(100vw - 50%);
 
     display: flex;
     justify-content: center;
@@ -82,4 +90,23 @@ main {
 
 .line-last-orderes {
     display: flex;
+}
+
+
+
+
+
+
+@media (max-width: 614px) {
+    .model-criation {
+        flex-direction: column-reverse;
+    }
+
+    .column-one-choose-options {
+        width: 100%;
+    }
+
+    .column-two-image-model {
+        width: 100%;
+    }
 }
