@@ -17,6 +17,10 @@ function selectModel(element) {
     }
 
     element.classList.add('border-circle-blue');
+
+    //document.querySelector('.small-lines span').nextElementSibling // pega o paragrafo
+
+    turnsBlueButton();
 }
 
 function selectCollar(element) {
@@ -27,6 +31,8 @@ function selectCollar(element) {
     }
 
     element.classList.add('border-circle-blue');
+
+    turnsBlueButton();
 }
 
 function selectTissue(element) {
@@ -37,4 +43,32 @@ function selectTissue(element) {
     }
 
     element.classList.add('border-circle-blue');
+
+    turnsBlueButton();
+}
+
+function checkReferenceImage() {
+    let catchValueImageReference = document.querySelector('.big-line input').value;
+    let linkIsValid = catchValueImageReference.startsWith('https://') || catchValueImageReference.startsWith('http:/');
+    
+    if(catchValueImageReference !== "" && linkIsValid) {
+        console.log(true);
+    } else {
+        alert("Insira um link válido de referência");
+    }
+}
+
+
+function turnsBlueButton() {
+    
+    console.log("ainda não");
+    console.log(selectModel, selectCollar, selectTissue);
+    
+}
+
+
+function finishOrder() {
+    
+    //checkReferenceImage();
+
 }
