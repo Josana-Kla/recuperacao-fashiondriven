@@ -89,7 +89,6 @@ header img {
 
 .small-lines {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
@@ -101,7 +100,7 @@ header img {
 .small-lines div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; 
     align-items: center;
 }
 
@@ -183,7 +182,7 @@ header img {
 
 
 /*-------------------- USED IN JS -------------------- */
-.border-circle-blue {
+.small-lines span.border-circle-blue {
     border: 3px solid #404EED;
 }
 
