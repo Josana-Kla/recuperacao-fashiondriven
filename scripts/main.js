@@ -7,10 +7,13 @@ if(userName === "undefined" || userName === "" || Number(userName)) {
  */
 
 let userName = "Maria";
-
+let modelSelectedByUser;
+let collarSelectedByUser;
+let tissueSelectedByUser;
 
 function selectModel(element) {
-    let catchCircle = document.querySelector('.model .border-circle-blue');
+    modelSelectedByUser = element.nextElementSibling.innerHTML;
+    const catchCircle = document.querySelector('.model .border-circle-blue');
 
     if(catchCircle !== null) {
         catchCircle.classList.remove('border-circle-blue');
@@ -18,12 +21,10 @@ function selectModel(element) {
 
     element.classList.add('border-circle-blue');
 
-    //document.querySelector('.small-lines span').nextElementSibling // pega o paragrafo
-
-    turnsBlueButton();
 }
 
 function selectCollar(element) {
+    collarSelectedByUser = element.nextElementSibling.innerHTML;
     const catchCircle = document.querySelector('.collar .border-circle-blue');
 
     if(catchCircle !== null) {
@@ -32,10 +33,10 @@ function selectCollar(element) {
 
     element.classList.add('border-circle-blue');
 
-    turnsBlueButton();
 }
 
 function selectTissue(element) {
+    tissueSelectedByUser = element.nextElementSibling.innerHTML;
     const catchCircle = document.querySelector('.tissue .border-circle-blue');
 
     if(catchCircle !== null) {
@@ -44,31 +45,30 @@ function selectTissue(element) {
 
     element.classList.add('border-circle-blue');
 
-    turnsBlueButton();
+    /* collarSelectedByUser = element.nextElementSibling.innerHTML;
+    console.log(collarSelectedByUser) */
+
 }
 
-function checkReferenceImage() {
-    let catchValueImageReference = document.querySelector('.big-line input').value;
-    let linkIsValid = catchValueImageReference.startsWith('https://') || catchValueImageReference.startsWith('http:/');
-    
-    if(catchValueImageReference !== "" && linkIsValid) {
-        console.log(true);
+function turnsBlueButton() {
+    let catchValueImageReference = document.querySelector('.big-line input');
+    let catchButton = document.querySelector('.big-line button');
+    let linkIsValid = catchValueImageReference.value.startsWith('https://') || catchValueImageReference.value.startsWith('http:/');
+    let linkIsAnImage = catchValueImageReference.value.includes('.jpg') || catchValueImageReference.value.includes('.jpeg') || catchValueImageReference.value.includes('.svg') || catchValueImageReference.value.includes('.png') || catchValueImageReference.value.includes('.bmp') || catchValueImageReference.value.includes('.tiff') || catchValueImageReference.value.includes('.raw');
+   
+    if(modelSelectedByUser !== undefined && collarSelectedByUser !== undefined && tissueSelectedByUser !== undefined && catchValueImageReference.value !== "" && linkIsValid && linkIsAnImage) {
+        catchButton.classList.add('button-blue');
     } else {
-        alert("Insira um link válido de referência");
+        catchValueImageReference.value = "";
+        catchButton.classList.remove('button-blue');
+        alert("Insira um link válido para a referência");
     }
 }
 
 
-function turnsBlueButton() {
-    
-    console.log("ainda não");
-    console.log(selectModel, selectCollar, selectTissue);
-    
-}
-
-
 function finishOrder() {
+    //se der certo - alert confirmando a encomenda; e envia p servidor
+    //se der errado - alert "Ops, não conseguimos processar sua encomenda"
     
-    //checkReferenceImage();
 
 }
