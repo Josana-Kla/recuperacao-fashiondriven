@@ -132,17 +132,34 @@ function finishOrder(element) {
 
 function sendOrderToServer() {
     const promise = axios.post('https://mock-api.driven.com.br/api/v4/shirts-api/shirts', objectModelToOrder);
-    promise.then(respostaPedido);
-    promise.catch(errorAnswer);
+    promise.then(successOrderAnswer);
+    promise.catch(errorOrderAnswer);
 }
 
-function respostaPedido(response) {
+function successOrderAnswer(response) {
     alert("Sua encomenda foi realizada com sucesso!");
+    console.log(response.status);
     console.log(response);
 }
 
-function errorAnswer(erro) {
+function errorOrderAnswer(erro) {
     alert("Ops, não conseguimos processar sua encomenda");
     console.log(erro.response.status);
     console.log(erro.response.data);
+}
+
+
+
+function getOthersCriation() {
+    const promise = axios.get('https://mock-api.driven.com.br/api/v4/shirts-api/shirts');
+    promise.then(showOthersCriation);
+    promise.catch(showErrorGetCriations);
+}
+
+function showOthersCriation() {
+
+}
+
+function showErrorGetCriations() {
+    
 }
