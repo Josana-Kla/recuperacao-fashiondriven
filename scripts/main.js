@@ -1,15 +1,24 @@
-/* let userName = prompt('Qual é o seu nome?');
+let userName = prompt('Qual é o seu nome?');
 
-if(userName === "undefined" || userName === "" || Number(userName)) {
-    alert('Digite um nome válido');
-    window.location.reload();
+function getUserName() {
+    while (userName === "undefined" || userName === "" || userName === null || Number(userName) || userName === "true" || userName === "false") {
+        alert('Digite um nome válido');
+        userName = prompt('Qual é o seu nome?');
+    }
 }
- */
 
-let userName = "Maria";
+
+getUserName();
+
 let modelSelectedByUser;
 let collarSelectedByUser;
 let tissueSelectedByUser;
+
+let orderIsAllRight;
+let imageReferenceUrl;
+
+let objectModelToOrder;
+
 
 function selectModel(element) {
     modelSelectedByUser = element.nextElementSibling.innerHTML;
@@ -43,8 +52,8 @@ function selectTissue(element) {
 
     element.classList.add('border-circle-blue');
 }
-let imageReferenceUrl;
-let orderIsAllRight;
+
+
 function turnsBlueButton() {
     let catchValueImageReference = document.querySelector('.big-line input');
     const catchButton = document.querySelector('.big-line button');
@@ -92,30 +101,11 @@ function changeTissueNamesToEnglish() {
     }
 }
 
-/* let objectModelToOrder = { 
-    `
-        model: ${modelSelectedByUser},
-        neck: ${collarSelectedByUser},
-        material: ${tissueSelectedByUser},
-        image: ${imageReferenceUrl},
-        owner: "oii",
-        author: "euu"
-    `
-} */
-
-
-
-
-let objectModelToOrder;
-
 
 function finishOrder(element) {
-    if(orderIsAllRight === true) {
-        
-        
+    if(orderIsAllRight === true) { 
         alert(`
-            Encomenda confirmada com sucesso!
-            Você pediu:
+            Seu pedido:
             - Modelo: ${modelSelectedByUser},
             - Gola: ${collarSelectedByUser},
             - Tecido: ${tissueSelectedByUser}
@@ -131,24 +121,28 @@ function finishOrder(element) {
             "material": tissueSelectedByUser,
             "image": imageReferenceUrl,
             "owner": userName,
-            "author": "nonee" 
+            "author": userName 
         }
 
-        console.log(objectModelToOrder);
-        //manda p servidor
+        sendOrderToServer();
     }
-    //se der certo - alert confirmando a encomenda; e envia p servidor
-    //se der errado - alert "Ops, não conseguimos processar sua encomenda" 
 }
 
 
 
 function sendOrderToServer() {
-    let promise = axios.post('https://mock-api.driven.com.br/api/v4/shirts-api/shirts', objectModelToOrder);
+    const promise = axios.post('https://mock-api.driven.com.br/api/v4/shirts-api/shirts', objectModelToOrder);
     promise.then(respostaPedido);
-    promise.catch();
+    promise.catch(errorAnswer);
 }
 
 function respostaPedido(response) {
+    alert("Sua encomenda foi realizada com sucesso!");
     console.log(response);
+}
+
+function errorAnswer(erro) {
+    alert("Ops, não conseguimos processar sua encomenda");
+    console.log(erro.response.status);
+    console.log(erro.response.data);
 }
