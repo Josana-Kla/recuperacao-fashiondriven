@@ -1,4 +1,4 @@
-let userName = prompt('Qual é o seu nome?');
+/* let userName = prompt('Qual é o seu nome?');
 
 function getUserName() {
     while (userName === "undefined" || userName === "" || userName === null || Number(userName) || userName === "true" || userName === "false") {
@@ -8,8 +8,8 @@ function getUserName() {
 }
 
 
-getUserName();
-
+getUserName(); */
+let userName = "Bia";
 let modelSelectedByUser;
 let collarSelectedByUser;
 let tissueSelectedByUser;
@@ -148,18 +148,36 @@ function errorOrderAnswer(erro) {
     console.log(erro.response.data);
 }
 
+let allUsersCreations = [];
 
-
+getOthersCriation();
 function getOthersCriation() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v4/shirts-api/shirts');
-    promise.then(showOthersCriation);
+    promise.then(catchResponse);
     promise.catch(showErrorGetCriations);
 }
 
-function showOthersCriation() {
+function catchResponse(response) {
+    allUsersCreations = response.data;
+    console.log(allUsersCreations);
+    showOthersCriation();
+}
 
+function showOthersCriation() {
+    let catchLineLastOrderes = document.querySelector('.last-orderes .line-last-orderes');
+
+    for(i = 0; i < allUsersCreations.length; i++) {
+        catchLineLastOrderes.innerHTML += `
+            <div>
+                <img src="${allUsersCreations[i].image}">
+                <p><strong>Criador: </strong>${allUsersCreations[i].owner}</p>
+            </div>
+        `
+    }
+
+    console.log(catchLineLastOrderes);
 }
 
 function showErrorGetCriations() {
-    
+
 }
