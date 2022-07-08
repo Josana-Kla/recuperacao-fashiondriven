@@ -143,5 +143,12 @@ function finishOrder(element) {
 
 
 
+function sendOrderToServer() {
+    let promise = axios.post('https://mock-api.driven.com.br/api/v4/shirts-api/shirts', objectModelToOrder);
+    promise.then(respostaPedido);
+    promise.catch();
+}
 
-
+function respostaPedido(response) {
+    console.log(response);
+}
