@@ -1,4 +1,4 @@
-/* let userName = prompt('Qual é o seu nome?');
+let userName = prompt('Qual é o seu nome?');
 
 function getUserName() {
     while (userName === "undefined" || userName === "" || userName === null || Number(userName) || userName === "true" || userName === "false") {
@@ -6,10 +6,8 @@ function getUserName() {
         userName = prompt('Qual é o seu nome?');
     }
 }
- */
 
 
-let userName = "Bia";
 let modelSelectedByUser;
 let collarSelectedByUser;
 let tissueSelectedByUser;
@@ -24,7 +22,7 @@ let allUsersCreations = [];
 let catchUrlImageSelected;
 let catchCreatorSelected;
 
-//getUserName();
+getUserName();
 getOthersCriation();
 
 
@@ -150,6 +148,7 @@ function successOrderAnswer(response) {
     alert("Sua encomenda foi realizada com sucesso!");
     console.log(response.status);
     console.log(response);
+    window.location.reload();
 }
 
 function errorOrderAnswer(erro) {
