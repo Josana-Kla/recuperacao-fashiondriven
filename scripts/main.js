@@ -6,9 +6,9 @@ function getUserName() {
         userName = prompt('Qual é o seu nome?');
     }
 }
+ */
 
 
-getUserName(); */
 let userName = "Bia";
 let modelSelectedByUser;
 let collarSelectedByUser;
@@ -18,6 +18,14 @@ let orderIsAllRight;
 let imageReferenceUrl;
 
 let objectModelToOrder;
+
+let allUsersCreations = [];
+
+let catchUrlImageSelected;
+let catchCreatorSelected;
+
+//getUserName();
+getOthersCriation();
 
 
 function selectModel(element) {
@@ -111,23 +119,25 @@ function finishOrder(element) {
             - Tecido: ${tissueSelectedByUser}
         `)
 
-        changeModelNamesToEnglish();
-        changeCollarNamesToEnglish();
-        changeTissueNamesToEnglish();
-
-        objectModelToOrder = {  
-            "model": modelSelectedByUser,
-            "neck": collarSelectedByUser,
-            "material": tissueSelectedByUser,
-            "image": imageReferenceUrl,
-            "owner": userName,
-            "author": userName 
-        }
-
+        objectModel();
         sendOrderToServer();
     }
 }
 
+function objectModel() {
+    changeModelNamesToEnglish();
+    changeCollarNamesToEnglish();
+    changeTissueNamesToEnglish();
+
+    objectModelToOrder = {  
+        "model": modelSelectedByUser,
+        "neck": collarSelectedByUser,
+        "material": tissueSelectedByUser,
+        "image": imageReferenceUrl,
+        "owner": userName,
+        "author": userName 
+    }
+}
 
 
 function sendOrderToServer() {
@@ -148,9 +158,8 @@ function errorOrderAnswer(erro) {
     console.log(erro.response.data);
 }
 
-let allUsersCreations = [];
 
-getOthersCriation();
+
 function getOthersCriation() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v4/shirts-api/shirts');
     promise.then(catchResponse);
@@ -168,9 +177,9 @@ function showOthersCriation() {
 
     for(i = 0; i < allUsersCreations.length; i++) {
         catchLineLastOrderes.innerHTML += `
-            <div>
+            <div onclick="selectOtherUserCreation(this)">
                 <img src="${allUsersCreations[i].image}">
-                <p><strong>Criador: </strong>${allUsersCreations[i].owner}</p>
+                <p><strong>Criador: </strong><em>${allUsersCreations[i].owner}</em></p>
             </div>
         `
     }
@@ -178,6 +187,50 @@ function showOthersCriation() {
     console.log(catchLineLastOrderes);
 }
 
-function showErrorGetCriations() {
+function showErrorGetCriations(erro) {
+    alert("Ops, não foi possível listar os últimos pedidos dos outros usuários");
+    console.log(erro.response.status);
+    console.log(erro.response.data);
+}
 
+function selectOtherUserCreation(element) {
+    const confirmOrder = confirm("Clique em OK para confirmar seu pedido");
+    console.log(confirmOrder);
+    catchUrlImageSelected = element.querySelector('img').src;
+    catchCreatorSelected = element.querySelector('p em').innerHTML;
+    console.log(catchUrlImageSelected);
+    console.log(catchCreatorSelected);
+
+
+    if(confirmOrder === true) {
+        catchClotheSelected();
+    }
+}
+
+function catchClotheSelected() {
+    for(let i = 0; i < allUsersCreations.length; i++) {
+        if(allUsersCreations[i].image === catchUrlImageSelected && allUsersCreations[i].owner === catchCreatorSelected) {
+            objectModelToOrder = {  
+                "model": allUsersCreations[i].model,
+                "neck": allUsersCreations[i].neck,
+                "material": allUsersCreations[i].material,
+                "image": allUsersCreations[i].image,
+                "owner": allUsersCreations[i].owner,
+                "author": userName
+            }
+            console.log(objectModelToOrder);
+        }
+    }
+    orderClotheOtherUserSelected();
+}
+
+function orderClotheOtherUserSelected() {
+    const promise = axios.post('https://mock-api.driven.com.br/api/v4/shirts-api/shirts', objectModelToOrder);
+    promise.then(successOrderAnswer);
+    promise.catch(errorOrderClotheSelected);
+}
+
+function errorOrderClotheSelected(erro) {
+    console.log(erro.response.status);
+    console.log(erro.response.data);
 }
