@@ -15,10 +15,10 @@ let allUsersCreations = [];
 
 let catchUrlImageSelected;
 let catchCreatorSelected;
+let hasAnUrl;
 
 //getUserName();
 getOthersCriation();
-
 
 
 
@@ -29,9 +29,9 @@ function getUserName() {
     }
 }
 
-function selectModel(element) {
+function selectClotheOptions(element, type) {
     modelSelectedByUser = element.nextElementSibling.innerHTML;
-    const catchCircle = document.querySelector('.model .border-circle-blue');
+    const catchCircle = document.querySelector(`.${type} .border-circle-blue`);
 
     if(catchCircle !== null) {
         catchCircle.classList.remove('border-circle-blue');
@@ -40,29 +40,7 @@ function selectModel(element) {
     element.classList.add('border-circle-blue');
 }
 
-function selectCollar(element) {
-    collarSelectedByUser = element.nextElementSibling.innerHTML;
-    const catchCircle = document.querySelector('.collar .border-circle-blue');
 
-    if(catchCircle !== null) {
-        catchCircle.classList.remove('border-circle-blue');
-    }
-
-    element.classList.add('border-circle-blue');
-}
-
-function selectTissue(element) {
-    tissueSelectedByUser = element.nextElementSibling.innerHTML;
-    const catchCircle = document.querySelector('.tissue .border-circle-blue');
-
-    if(catchCircle !== null) {
-        catchCircle.classList.remove('border-circle-blue');
-    }
-
-    element.classList.add('border-circle-blue');
-}
-
-let hasAnUrl;
 function turnsBlueButton() {
     let catchValueImageReference = document.querySelector('.big-line input');
     const catchButton = document.querySelector('.big-line button');
