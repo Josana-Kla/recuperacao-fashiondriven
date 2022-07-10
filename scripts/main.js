@@ -1,12 +1,6 @@
-let userName = prompt('Qual é o seu nome?');
+//let userName = prompt('Qual é o seu nome?');
 
-function getUserName() {
-    while (userName === "undefined" || userName === "" || userName === null || Number(userName) || userName === "true" || userName === "false") {
-        alert('Digite um nome válido');
-        userName = prompt('Qual é o seu nome?');
-    }
-}
-
+let userName = "Dakota";
 
 let modelSelectedByUser;
 let collarSelectedByUser;
@@ -22,9 +16,18 @@ let allUsersCreations = [];
 let catchUrlImageSelected;
 let catchCreatorSelected;
 
-getUserName();
+//getUserName();
 getOthersCriation();
 
+
+
+
+function getUserName() {
+    while (userName === "undefined" || userName === "" || userName === null || Number(userName) || userName === "true" || userName === "false") {
+        alert('Digite um nome válido');
+        userName = prompt('Qual é o seu nome?');
+    }
+}
 
 function selectModel(element) {
     modelSelectedByUser = element.nextElementSibling.innerHTML;
@@ -59,20 +62,25 @@ function selectTissue(element) {
     element.classList.add('border-circle-blue');
 }
 
-
+let hasAnUrl;
 function turnsBlueButton() {
     let catchValueImageReference = document.querySelector('.big-line input');
     const catchButton = document.querySelector('.big-line button');
     const linkIsValid = catchValueImageReference.value.startsWith('https://') || catchValueImageReference.value.startsWith('http:/');
     const linkIsAnImage = catchValueImageReference.value.includes('.jpg') || catchValueImageReference.value.includes('.jpeg') || catchValueImageReference.value.includes('.svg') || catchValueImageReference.value.includes('.png') || catchValueImageReference.value.includes('.bmp') || catchValueImageReference.value.includes('.tiff') || catchValueImageReference.value.includes('.raw');
-   
-    if(modelSelectedByUser !== undefined && collarSelectedByUser !== undefined && tissueSelectedByUser !== undefined && catchValueImageReference.value !== "" && linkIsValid && linkIsAnImage) {
-        catchButton.classList.add('button-blue');
-        imageReferenceUrl = catchValueImageReference.value;
-        orderIsAllRight = true;
+    imageReferenceUrl = catchValueImageReference.value;
+
+    if(modelSelectedByUser !== undefined && collarSelectedByUser !== undefined && tissueSelectedByUser !== undefined && linkIsValid && linkIsAnImage && catchValueImageReference.value !== "") {
+        for(let i = 0; i < imageReferenceUrl.length; i++) {
+            catchButton.classList.add('button-blue');
+            hasAnUrl = true;
+            orderIsAllRight = true;
+        }
     } else {
         catchValueImageReference.value = "";
         catchButton.classList.remove('button-blue');
+        hasAnUrl = false;
+        orderIsAllRight = false;
         alert("Insira um link válido para a referência");
     }
 }
@@ -109,7 +117,7 @@ function changeTissueNamesToEnglish() {
 
 
 function finishOrder(element) {
-    if(orderIsAllRight === true) { 
+    if(orderIsAllRight === true && hasAnUrl === true) { 
         alert(`
             Seu pedido:
             - Modelo: ${modelSelectedByUser},
@@ -167,7 +175,6 @@ function getOthersCriation() {
 
 function catchResponse(response) {
     allUsersCreations = response.data;
-    console.log(allUsersCreations);
     showOthersCriation();
 }
 
@@ -182,8 +189,6 @@ function showOthersCriation() {
             </div>
         `
     }
-
-    console.log(catchLineLastOrderes);
 }
 
 function showErrorGetCriations(erro) {
@@ -194,12 +199,8 @@ function showErrorGetCriations(erro) {
 
 function selectOtherUserCreation(element) {
     const confirmOrder = confirm("Clique em OK para confirmar seu pedido");
-    console.log(confirmOrder);
     catchUrlImageSelected = element.querySelector('img').src;
     catchCreatorSelected = element.querySelector('p em').innerHTML;
-    console.log(catchUrlImageSelected);
-    console.log(catchCreatorSelected);
-
 
     if(confirmOrder === true) {
         catchClotheSelected();
@@ -217,7 +218,6 @@ function catchClotheSelected() {
                 "owner": allUsersCreations[i].owner,
                 "author": userName
             }
-            console.log(objectModelToOrder);
         }
     }
     orderClotheOtherUserSelected();
